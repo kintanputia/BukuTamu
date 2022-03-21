@@ -122,7 +122,7 @@
                                 <div class="form-group hidden_input">
                                     <label class="control-label col-md-3 col-sm-3" for="nama">Yang Ditemui </label>
                                     <div class="col-md-8 col-sm-8">
-                                        <select class="form-control multiple-select2" multiple data-size="5" name="pegawai[]" id="pegawai" data-parsley-required="true" width="100%" required> 
+                                        <select class="form-control multiple-select2" multiple data-size="5" name="pegawai[]" id="pegawai" data-parsley-required="true" required> 
                                             @foreach($pegawai as $p)
                                                 <option value="{{ $p['NIP'] }}" @if (old('pegawai') == $p['NIP']) {{ 'selected' }} @endif>{{ $p['NAMA_PEGAWAI'] }}</option>
                                             @endforeach 
@@ -137,13 +137,13 @@
                                 </div>
                                 <div class="form-group hidden_input">
                                     <div class="col-md-12 col-sm-12 text-center">
-                                        <button type="submit" class="btn btn-sm btn-primary" id="btnSimpan">Simpan</button>
+                                        <button type="submit" class="btn btn-sm btn-primary" id="btnSimpan"><i class="fa fa-save"></i> Simpan</button>
                                     </div>
                                 </div>
                             </form>
                                 <div class="col-md-12 col-sm-12 text-center">
                                     <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#formBuatJanjiModal">
-                                        Buat Janji Tamu
+                                     Buat Janji Tamu
                                     </button>
                                 </div>
         
@@ -252,11 +252,15 @@
     <div class="modal fade" id="formBuatJanjiModal" tabindex="-1" role="dialog" aria-labelledby="formBuatJanjiModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">Janji Tamu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+            <div class='modal-header' style="background-color: #3a3a3b; 
+                                  color:white;
+                                  background: -moz-linear-gradient(top, rgba(89,89,89,1) 0%, rgba(59,59,59,1) 47%, rgba(89,89,89,1) 100%);">
+                <h5 class='col-12 modal-title text-white fw-bold'>
+                    <i class="fa fa-address-book-o"></i> Form Janji Tamu
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'><i style="color:white;" class="fa fa-window-close"></i></span>
+                    </button>
+                </h5>
             </div>
                 <form class="form-horizontal form" method="POST" action="{{ route('store.janjitamu') }}" autocomplete="off" id="form_janjitamu">
                     <div class="modal-body">
@@ -274,7 +278,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3" for="telepon">Telepon </label>
+                        <label class="control-label col-md-3 col-sm-3" for="telepon">Telepon/No. WhatsApp</label>
                         <div class="col-md-8 col-sm-8">
                             <input class="form-control" type="tel" id="telpon" name="telpon" placeholder="No. Telpon" value="{{ old('telpon') }}" data-parsley-required="true">
                         </div>
@@ -311,7 +315,6 @@
 
                     <div class="modal-footer">
                         <div class="col-md-12 col-sm-12">
-                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-save"></i> Simpan</button>
                         </div>
                     </div>
@@ -383,8 +386,11 @@
 
 <script>
     $( document ).ready(function() {
+        const pegawai = JSON.parse('@json($pegawai)')
+        
         $(".multiple-select2").select2({ 
-            placeholder: "  Pilih Pegawai"
+            placeholder: "  Pilih Pegawai",
+            allowClear: true
         });
 
         $("#tanggal_janji").datepicker({
@@ -433,7 +439,7 @@ function showTime(){
     var s = date.getSeconds(); // 0 - 59
 
     var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
+    var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
     var day = date.getDate();
     var month = date.getMonth();
@@ -512,6 +518,13 @@ showTime();
                     if(selectedData && selectedData.item && selectedData.item.data){
                         var data = selectedData.item.data;
 
+                        if(data.nip != null)
+                        var jml = 0;
+                        $.each(data.nip.split(","), function(i,e){
+                            $("#pegawai").select2().val(data.nip.split(",")).trigger("change");
+                            // jml = jml+1;
+                        });
+                        // $('#jumlah_tamu').val(jml);
                         $('#id_tamu').val(data.id);
                         $('#instansi').val(data.instansi);
                         $('#urusan').val(data.urusan);
@@ -526,6 +539,15 @@ showTime();
         }
 
         else if (jenis_tamu==0){
+            document.getElementById("nama_tamu").value="";
+            document.getElementById("jumlah_tamu").value="";
+            document.getElementById("instansi").value="";
+            $('#pegawai').val([]);
+            $("#pegawai").select2({
+                placeholder: "  Pilih Pegawai",
+            });
+            document.getElementById("urusan").value="";
+
             document.getElementById("form_bukutamu").setAttribute("action", "{{ route('store.bukutamu') }}");
         }     
     };

@@ -69,10 +69,6 @@
                                  <td width="100px">
                                     <a type="button" class="btn btn-xs btn-success konfirmasi" data-id="{{ $data->id }}" data-nilai="setujui"><i class="fa fa-check"></i></a>
                                     <a type="button" class="btn btn-xs btn-danger konfirmasi" data-id="{{ $data->id }}" data-nilai="tolak"><i class="fa fa-close"></i></a>
-                                 <?php 
-                                    $telpon = substr_replace($data->telpon,'62',0,1);
-                                 ?>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-info" target="_blank" href="{{ url('https://wa.me/'.$telpon.'?text=How%20are%20you%20?')}}"><i class="fa fa-share"></i></a>
                                  </td>
                                  <td>
                                     <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->id) }}"><i class="fa fa-eye"> Detail</i></a>
@@ -136,7 +132,7 @@
                                    <th>Tanggal Janji</th>
                                    <th>Yang Ditemui</th>
                                    <th>Urusan</th>
-                                   <th>Konfirmasi</th>
+                                   <th width="20px">Konfirmasi</th>
                                    <th>Aksi</th>
                                </tr>
                            </thead>
@@ -152,7 +148,7 @@
                                  <?php 
                                     $telpon = substr_replace($data->telpon,'62',0,1);
                                     $end = urlencode("\n");
-                                    $text = "Kepada%20Yth.%20".$data->nama_tamu.",".$end."".$end."Janji%20tamu%20BAPPEDA%20SUMBAR%20yang%20telah%20Anda%20buat,%20dengan%20detail%20sebagai%20berikut:".$end."%20%20Tanggal%20janji:%20".date('d-m-Y', strtotime($data->tanggal_janji))."".$end."%20%20Waktu%20janji:%20".$data->jam_janji."%20WIB".$end."%20%20Pegawai%20yang%20ditemui:%20".$data->pegawai_ditemui."".$end."%20%20Urusan:%20".$data->urusan."".$end."%20Mohon%20maaf,%20telah%20ditolak".$end."".$end."Terima Kasih.";
+                                    $text = "Kepada%20Yth.%20".$data->nama_tamu.",".$end."".$end."Janji%20tamu%20BAPPEDA%20SUMBAR%20yang%20telah%20Anda%20buat,%20dengan%20detail%20sebagai%20berikut:".$end."%20%20Tanggal%20janji:%20".date('d-m-Y', strtotime($data->tanggal_janji))."".$end."%20%20Waktu%20janji:%20".$data->jam_janji."%20WIB".$end."%20%20Pegawai%20yang%20ditemui:%20".$data->pegawai_ditemui."".$end."%20%20Urusan:%20".$data->urusan."".$end."%20*Mohon%20maaf,%20telah%20ditolak*".$end."".$end."Terima Kasih.";
                                  ?>
                                     <a type="button" class="btn btn-xs m-r-5 btn-info" href="{{ url('https://wa.me/'.$telpon.'?text='.$text)}}" target="_blank"><i class="fa fa-share"></i></a>
                                  </td>
@@ -184,6 +180,16 @@
       $('.listJanjiTamu').DataTable({
          pageLength: 10,
          lengthMenu: [10, 25, 50, "All"],
+         bAutoWidth: false,
+         columnDefs: [
+            { "width": "5%", "targets": 0 },
+            { "width": "15%", "targets": 1 },
+            { "width": "15%", "targets": 2 },
+            { "width": "25%", "targets": 3 },
+            { "width": "25%", "targets": 4 },
+            { "width": "10%", "targets": 5 },
+            { "width": "5%", "targets": 6 }
+         ]
       });
 
       $('.konfirmasi').click(function(){

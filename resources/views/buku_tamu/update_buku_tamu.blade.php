@@ -76,6 +76,12 @@
                </div>
               </div>
               <div class="form-group">
+               <label class="control-label col-md-4 col-sm-4" for="nip">Urusan</label>
+               <div class="col-md-6 col-sm-6">
+                   <textarea class="form-control" type="text" readonly>{{ $data->urusan }}</textarea>
+               </div>
+              </div>
+              <div class="form-group">
                <label class="control-label col-md-4 col-sm-4"></label>
                <div class="col-md-6 col-sm-6">
                   <button type="submit" class="btn btn-success" name="update" value="update" id="update"><i class="fa fa-save"></i> Ubah</button>

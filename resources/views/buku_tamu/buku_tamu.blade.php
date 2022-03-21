@@ -19,12 +19,9 @@
         <div class="widget widget-stats bg-blue">
             <div class="stats-icon"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>PENGUNJUNG HARI INI</h4>
+                    <h4>JUMLAH TAMU HARI INI</h4>
                     <p>{{ $data_stats['total_pengunjung'] }}</p>
                 </div>
-            <div class="stats-link">
-                <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-3">
@@ -34,9 +31,6 @@
                     <h4>PENILAIAN SANGAT PUAS</h4>
                     <p>{{ $data_stats['total_sangatpuas'] }}</p>
                 </div>
-            <div class="stats-link">
-                <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-3">
@@ -46,9 +40,6 @@
                     <h4>PENILAIAN CUKUP PUAS</h4>
                     <p>{{ $data_stats['total_puas'] }}</p>
                 </div>
-            <div class="stats-link">
-                <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
         </div>
     </div>
     <div class="col-xl-3 col-md-3">
@@ -58,9 +49,6 @@
                     <h4>PENILAIAN KURANG PUAS</h4>
                     <p>{{ $data_stats['total_kurangpuas'] }}</p>
                 </div>
-            <div class="stats-link">
-                <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
-            </div>
         </div>
     </div>
 </div>
@@ -93,7 +81,8 @@
                           <label>Tanggal Akhir</label><input type="text" class="form-control form-control-sm" id="max" name="max" placeholder="Masukkan Tanggal Akhir">
                       </td>
                       <td>
-                        <button type="button" class="btn btn-sm btn-warning" onclick="location.reload();"><i class="fa fa-recycle"></i></button>
+                      <label class=""></label>
+                      <div style="margin-top:5px"><button type="button" class="btn btn-sm btn-warning" onclick="location.reload();"><i class="fa fa-recycle"></i></button></div>
                      </td>
                     </tr>
                   </tbody>
@@ -206,19 +195,12 @@
         lengthMenu: [10, 25, 50, "All"],
         buttons: [
             {
-                extend: 'csvHtml5',
+                extend: 'excelHtml5',
                 title: 'Buku Tamu',
                 exportOptions: {
                     columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
                 }
             },
-            {
-                extend: 'pdfHtml5',
-                title: 'Buku Tamu',
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                }
-            }
         ]
        });
      

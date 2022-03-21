@@ -39,3 +39,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/bukutamu/{id}/{nilai}', [BukuTamuController::class, 'storePenilaianTamu'])->name('store.penilaiantamu');
     Route::get('/bukutamu/{nama}', [BukuTamuController::class, 'fetchBukuTamu'])->name('fetch.bukutamu');
 
+    Route::get('/test', [BukuTamuController::class, 'test'])->name('');
+

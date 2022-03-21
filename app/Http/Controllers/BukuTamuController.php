@@ -13,14 +13,8 @@ class BukuTamuController extends Controller
     protected function absen($nip){
         $data_masuk_keluar = array();
 
-        $ctx = stream_context_create(array('http'=>
-            array(
-                'timeout' => 1200,  //1200 Seconds is 20 Minutes
-            )
-        ));
-
         $thn_bulan = date('Y-m');
-        $json = file_get_contents('https://abon.sumbarprov.go.id/penilaian/presensi/'.$nip.'/'.$thn_bulan, false, $ctx);
+        $json = file_get_contents('https://abon.sumbarprov.go.id/penilaian/presensi/'.$nip.'/'.$thn_bulan);
         $absen = json_decode($json, true);
 
         $tgl_skrg = date('Y-m-d')." 07:30:00";
@@ -206,7 +200,7 @@ class BukuTamuController extends Controller
         $data_nama = array();
         $data = array();
 
-        $tamu = BukuTamu::select('id', 'nama_tamu', 'tanggal_masuk', 'nip', 'yang_menerima')->where('id', $id)->first();
+        $tamu = BukuTamu::select('id', 'nama_tamu', 'tanggal_masuk', 'nip', 'yang_menerima', 'urusan')->where('id', $id)->first();
         $data_yang_ditemui = explode(',', trim($tamu->yang_menerima));  
         $data_nip = explode(',', trim($tamu->nip));
             foreach($data_nip as $nip){

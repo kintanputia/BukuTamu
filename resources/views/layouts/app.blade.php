@@ -9,6 +9,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
+	<link href='http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/logo_sakatoplan.png' rel='shortcut icon'>
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -90,6 +91,7 @@
 	<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
 	<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
    <script src="{{ asset('assets/js/table-manage-default.demo.min.js') }}"></script>
    <script src="{{asset('assets/js/apps.min.js')}}"></script>
