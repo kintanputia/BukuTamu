@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuTamuController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Auth::routes();
 
 Route::middleware('auth')->group(function () {
     
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
     Route::get('/bukutamu/master', [BukuTamuController::class, 'showBukuTamu'])->name('show.bukutamu');
     Route::get('/bukutamu/master/{id}', [BukuTamuController::class, 'showUpdateBukuTamu'])->name('show.update.bukutamu');
     Route::post('/bukutamu/master/{id}', [BukuTamuController::class, 'updateBukuTamu'])->name('update.bukutamu');
@@ -38,6 +39,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/bukutamu/{id}', [BukuTamuController::class, 'storeUpdateBukuTamu'])->name('store.update.bukutamu');
     Route::get('/bukutamu/{id}/{nilai}', [BukuTamuController::class, 'storePenilaianTamu'])->name('store.penilaiantamu');
     Route::get('/bukutamu/{nama}', [BukuTamuController::class, 'fetchBukuTamu'])->name('fetch.bukutamu');
-
-    Route::get('/test', [BukuTamuController::class, 'test'])->name('');
 

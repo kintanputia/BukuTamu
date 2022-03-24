@@ -29,7 +29,6 @@ class BukuTamuController extends Controller
         return $data_masuk_keluar[0];
     }
 
-
     // mengambil data dari URI
     protected function URI(){
         //read data
