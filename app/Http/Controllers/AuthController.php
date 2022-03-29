@@ -25,6 +25,7 @@ class AuthController extends Controller
         // get data
         $username = trim($request['username']);
         $password = md5(sha1(strip_tags(addslashes(trim($request['password'])))).'beye');
+        $token = bin2hex(random_bytes(40));
 
         //if user already login 
         if(Session::has('loggedin') && Session::get('loggedin') === true){
@@ -32,15 +33,22 @@ class AuthController extends Controller
             exit;
         }
 
+        //if the same user try to login in another device
+        if(Session::has('username')){
+            $result = User::select('token')->where('nip', $username)->first();
+            if($result['token'] && Session::get('token') != $result['token']){
+                $this->logout();
+            }
+        }
+
         $pegawai = $this->URI();
         foreach($pegawai as $p){
             if($username == $p['USERNAME'] && $password == $p['PASSWORD']){
-                $token = bin2hex(random_bytes(40));
                 User::updateOrCreate(
                     ['nip' =>  $p['NIP']],
                     ['token' => $token]
                 );
-                
+                Session::put('username', $username);
                 Session::put('token', $token);
                 Session::put('user', $p['NAMA_PEGAWAI']);
                 Session::put('loggedin', true); 
@@ -56,7 +64,7 @@ class AuthController extends Controller
     public function logout(){
         if(Session::has('token')){
             User::where('token', Session::get('token'))->update(['token' => null]);
-            Session::pull('token'); Session::pull('user'); Session::pull('loggedin'); 
+            Session::pull('token'); Session::pull('username'); Session::pull('user'); Session::pull('loggedin'); 
 
             return redirect()->route('login');
         }  
