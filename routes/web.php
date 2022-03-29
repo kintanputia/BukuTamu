@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BukuTamuController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -16,14 +17,16 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('auth.login');
+    return view('login');
 });
+Route::post('/', [AuthController::class, 'login'])->name('login');
+// Auth::routes();
 
-Auth::routes();
-
-Route::middleware('auth')->group(function () {
+// Route::middleware('auth')->group(function () {
     
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get('/bukutamu/master', [BukuTamuController::class, 'showBukuTamu'])->name('show.bukutamu');
     Route::get('/bukutamu/master/{id}', [BukuTamuController::class, 'showUpdateBukuTamu'])->name('show.update.bukutamu');
     Route::post('/bukutamu/master/{id}', [BukuTamuController::class, 'updateBukuTamu'])->name('update.bukutamu');
@@ -32,8 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/bukutamu/janji', [BukuTamuController::class, 'storeJanjiTamu'])->name('store.janjitamu');
     Route::get('/bukutamu/janji/{id}', [BukuTamuController::class, 'detailJanjiTamu'])->name('detail.janjitamu');
     Route::get('/bukutamu/janji/{id}/{action}', [BukuTamuController::class, 'updateJanjiTamu'])->name('update.janjitamu');
-});
-
+// });
+    
     Route::get('/bukutamu', [BukuTamuController::class, 'indexBukuTamu'])->name('index.bukutamu');
     Route::post('/bukutamu', [BukuTamuController::class, 'storeBukuTamu'])->name('store.bukutamu');
     Route::post('/bukutamu/{id}', [BukuTamuController::class, 'storeUpdateBukuTamu'])->name('store.update.bukutamu');

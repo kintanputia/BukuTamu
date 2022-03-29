@@ -18,22 +18,16 @@
          <li class="dropdown navbar-user">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                <img src="assets/img/user-13.jpg" alt="" /> 
-               <span class="hidden-xs">{{ Auth::user()->name }}</span> <b class="caret"></b>
+               <span class="hidden-xs">{{Session::get('user')}}</span> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu animated fadeInLeft">
                <li class="arrow"></li>
                <li><a href="javascript:;">Edit Profile</a></li>
                <li class="divider"></li>
                <li>
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                     onclick="event.preventDefault();
-                     document.getElementById('logout-form').submit();">
+                  <a class="dropdown-item" href="{{ route('logout') }}">
                      {{ __('Logout') }}
                   </a>
-
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                     @csrf
-                  </form>
                </li>
             </ul>
          </li>
@@ -147,16 +141,13 @@
             <a href="#"><i class="fa fa-calendar"></i><span>E-Agenda</span></a>
          </li>
          <li>
-            <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-               document.getElementById('logout-form').submit();"><i class="fa fa-lock"></i>
+            <a class="dropdown-item" href="{{ route('logout') }}"><i class="fa fa-lock"></i>
                {{ __('Logout') }}
             </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-               @csrf
-            </form>
+            <!-- <a id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"></a> -->
          </li>
+         
 
    <!-- begin sidebar minify button -->
    <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
