@@ -9,7 +9,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	<link href='http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/logo_sakatoplan.png' rel='shortcut icon'>
+	<link rel="icon" type="image/png" sizes="16x16" href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/favicon.png">
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">

@@ -171,7 +171,7 @@
                         <br>
                         <div class="form-group">
                             <button type="submit" class="btn btn-info btn-block" id="login" name="login"> <strong>LOG IN</strong> </button>
-                            <a class="btn btn-warning btn-block" href="#" onclick="formRegister()" data-toggle="modal" data-target=".login-register-form"><i class="fa fa-address-book-o"></i> <strong> Daftar Akun Login Pengusul Hibah </strong></a>
+                            <!-- <a class="btn btn-warning btn-block" href="#" onclick="formRegister()" data-toggle="modal" data-target=".login-register-form"><i class="fa fa-address-book-o"></i> <strong> Daftar Akun Login Pengusul Hibah </strong></a> -->
                             <hr>
                         </div> 
                     </form>

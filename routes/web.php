@@ -22,18 +22,20 @@ Route::get('/', function () {
 
 Route::post('/', [AuthController::class, 'login'])->name('login');
 
-Route::group(['middleware' => 'LoginMiddleware'], function(){
-    Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard')->middleware('LoginMiddleware');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::group(['middleware' => 'PreventBack'], function(){
+    Route::group(['middleware' => 'LoginMiddleware'], function(){
+        Route::get('/dashboard', [AuthController::class, 'index'])->name('dashboard');
+        Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('/bukutamu/master', [BukuTamuController::class, 'showBukuTamu'])->name('show.bukutamu');
-    Route::get('/bukutamu/master/{id}', [BukuTamuController::class, 'showUpdateBukuTamu'])->name('show.update.bukutamu');
-    Route::post('/bukutamu/master/{id}', [BukuTamuController::class, 'updateBukuTamu'])->name('update.bukutamu');
+        Route::get('/bukutamu/master', [BukuTamuController::class, 'showBukuTamu'])->name('show.bukutamu');
+        Route::get('/bukutamu/master/{id}', [BukuTamuController::class, 'showUpdateBukuTamu'])->name('show.update.bukutamu');
+        Route::post('/bukutamu/master/{id}', [BukuTamuController::class, 'updateBukuTamu'])->name('update.bukutamu');
 
-    Route::get('/bukutamu/janji', [BukuTamuController::class, 'showJanjiTamu'])->name('show.janjitamu');
-    Route::post('/bukutamu/janji', [BukuTamuController::class, 'storeJanjiTamu'])->name('store.janjitamu');
-    Route::get('/bukutamu/janji/{id}', [BukuTamuController::class, 'detailJanjiTamu'])->name('detail.janjitamu');
-    Route::get('/bukutamu/janji/{id}/{action}', [BukuTamuController::class, 'updateJanjiTamu'])->name('update.janjitamu');
+        Route::get('/bukutamu/janji', [BukuTamuController::class, 'showJanjiTamu'])->name('show.janjitamu');
+        Route::post('/bukutamu/janji', [BukuTamuController::class, 'storeJanjiTamu'])->name('store.janjitamu');
+        Route::get('/bukutamu/janji/{id}', [BukuTamuController::class, 'detailJanjiTamu'])->name('detail.janjitamu');
+        Route::get('/bukutamu/janji/{id}/{action}', [BukuTamuController::class, 'updateJanjiTamu'])->name('update.janjitamu');
+    });
 });
         
     Route::get('/bukutamu', [BukuTamuController::class, 'indexBukuTamu'])->name('index.bukutamu');

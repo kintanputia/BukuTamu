@@ -147,9 +147,9 @@ class BukuTamuController extends Controller
 
 
         $stats_tamu = BukuTamu::where('tanggal_masuk', date('Y-m-d'))->sum('jumlah_tamu');
-        $stats_sp =  BukuTamu::where('nilai_pelayanan', 0)->where('tanggal_masuk', date('Y-m-d'))->count();
+        $stats_kp =  BukuTamu::where('nilai_pelayanan', 0)->where('tanggal_masuk', date('Y-m-d'))->count();
         $stats_p =  BukuTamu::where('nilai_pelayanan', 1)->where('tanggal_masuk', date('Y-m-d'))->count();         
-        $stats_kp =  BukuTamu::where('nilai_pelayanan', 2)->where('tanggal_masuk', date('Y-m-d'))->count(); 
+        $stats_sp =  BukuTamu::where('nilai_pelayanan', 2)->where('tanggal_masuk', date('Y-m-d'))->count(); 
         
         $data_stats = array(
             "total_pengunjung" => $stats_tamu,

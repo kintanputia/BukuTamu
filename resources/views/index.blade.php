@@ -9,7 +9,8 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-    <meta name="csrf-token" content="{{ csrf_token() }}"
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/favicon.png">
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -137,7 +138,7 @@
                                 </div>
                                 <div class="form-group hidden_input">
                                     <div class="col-md-12 col-sm-12 text-center">
-                                        <button type="submit" class="btn btn-sm btn-primary" id="btnSimpan"><i class="fa fa-save"></i> Simpan</button>
+                                        <button type="submit" class="btn btn-sm btn-primary" style="" id="btnSimpan"><i class="fa fa-save"></i> Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -146,7 +147,6 @@
                                      Buat Janji Tamu
                                     </button>
                                 </div>
-        
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@
     <div class="modal fade" id="formBuatJanjiModal" tabindex="-1" role="dialog" aria-labelledby="formBuatJanjiModalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class='modal-header' style="background-color: #3a3a3b; 
+            <div class='modal-header header-color' style="background-color: #3a3a3b; 
                                   color:white;
                                   background: -moz-linear-gradient(top, rgba(89,89,89,1) 0%, rgba(59,59,59,1) 47%, rgba(89,89,89,1) 100%);">
                 <h5 class='col-12 modal-title text-white fw-bold'>
@@ -280,7 +280,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3" for="telepon">Telepon/No. WhatsApp</label>
                         <div class="col-md-8 col-sm-8">
-                            <input class="form-control" type="tel" id="telpon" name="telpon" placeholder="No. Telpon" value="{{ old('telpon') }}" data-parsley-required="true">
+                            <input class="form-control" type="tel" id="telpon" name="telpon" placeholder="08xxxxxxxxxx" value="{{ old('telpon') }}" data-parsley-required="true">
                         </div>
                     </div>
                     <div class="form-group">
