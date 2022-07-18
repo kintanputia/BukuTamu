@@ -32,71 +32,84 @@
             <div class="panel-body panel-form"> 
                <div class="form-horizontal form-bordered">
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>#ID</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->id }}
+                     <label class="control-label col-md-4 col-sm-4" for="kode_tamu">#ID</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{$data->kode_tamu}}</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Nama Tamu</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->nama_tamu }}
+                     <label class="control-label col-md-4 col-sm-4" for="nama_tamu">Nama Tamu</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{$data->nama_tamu}}</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Instansi Asal</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->instansi }}
+                     <label class="control-label col-md-4 col-sm-4" for="instansi">Instansi Asal</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{$data->instansi}}</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Tanggal Janji</strong></div>
-                     <div class="col-md-8">
-                        <?php echo date('d-m-Y', strtotime($data->tanggal_janji)); ?>
+                     <label class="control-label col-md-4 col-sm-4" for="tanggal_janji">Tanggal Janji</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px"><?php echo date('d-m-Y', strtotime($data->tanggal_janji)); ?></p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Waktu Janji</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->jam_janji }} WIB
+                     <label class="control-label col-md-4 col-sm-4" for="jam_janji">Waktu Janji</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{ $data->jam_janji }} WIB</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Telepon</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->telpon }}
+                     <label class="control-label col-md-4 col-sm-4" for="telepon">Telepon</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{ $data->telpon }} WIB</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Yang Ditemui</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->pegawai_ditemui }}
+                     <label class="control-label col-md-4 col-sm-4" for="yang_ditemui">Yang Ditemui</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{ $data->pegawai_ditemui }}</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Urusan</strong></div>
-                     <div class="col-md-8">
-                        {{ $data->urusan }}
+                     <label class="control-label col-md-4 col-sm-4" for="urusan">Urusan</label>
+                     <div class="col-md-6 col-sm-6">
+                        <p style="line-height:30px">{{ $data->urusan }}</p>
                      </div>
                   </div>
                   <div class="form-group">
-                     <div class="col-md-4 text-right"><strong>Status Janji</strong></div>
-                     <div class="col-md-8">
+                     <label class="control-label col-md-4 col-sm-4" for="urusan">Status Janji</label>
+                     <div class="col-md-6 col-sm-6">
                         @if ($data->status_janji == 0)
-                            <div class="badge badge-warning text-wrap">Menunggu Konfirmasi</div>
+                            <div style="line-height:30px">
+                              <div class="badge badge-warning text-wrap">
+                                 Menunggu Konfirmasi
+                              </div>
+                           </div>
                         @elseif($data->status_janji == 1)
-                           <div class="badge badge-success text-wrap">Disetujui</div>
+                           <div style="line-height:30px">
+                                 <div class="badge badge-success text-wrap">
+                                    Disetujui
+                                 </div>
+                           </div>
                         @elseif($data->status_janji == 2)
-                           <div class="badge badge-danger text-wrap">Ditolak</div>
+                           <div style="line-height:30px">
+                              <div class="badge badge-danger text-wrap">
+                                 Ditolak
+                              </div>
+                           </div>
                         @endif
                      </div>
                   </div>
                   <div class="form-group">
                      <label class="control-label col-md-4 col-sm-4"></label>
-                     <div class="col-md-8 col-sm-8">
+                     <div class="col-md-6 col-sm-6">
                         <a href="{{ route('show.janjitamu') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i> Kembali</a>
                      </div>
                     </div>
+                  </div>
                </div>
             </div>
          </div>

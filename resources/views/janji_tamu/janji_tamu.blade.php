@@ -67,11 +67,11 @@
                                  <td>{{ $data->pegawai_ditemui }}</td>
                                  <td>{{ $data->urusan }}</td>
                                  <td width="100px">
-                                    <a type="button" class="btn btn-xs btn-success konfirmasi" data-id="{{ $data->id }}" data-nilai="setujui"><i class="fa fa-check"></i></a>
-                                    <a type="button" class="btn btn-xs btn-danger konfirmasi" data-id="{{ $data->id }}" data-nilai="tolak"><i class="fa fa-close"></i></a>
+                                    <a type="button" class="btn btn-xs btn-success konfirmasi" data-id="{{ $data->kode_tamu }}" data-nilai="setujui"><i class="fa fa-check"></i></a>
+                                    <a type="button" class="btn btn-xs btn-danger konfirmasi" data-id="{{ $data->kode_tamu }}" data-nilai="tolak"><i class="fa fa-close"></i></a>
                                  </td>
                                  <td>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->id) }}"><i class="fa fa-eye"> Detail</i></a>
+                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->kode_tamu) }}"><i class="fa fa-eye"></i></a>
                                  </td>
                               </tr>    
                               @endforeach
@@ -109,10 +109,10 @@
                                     $end = urlencode("\n");
                                     $text = "Kepada%20Yth.%20".$data->nama_tamu.",".$end."".$end."Janji%20tamu%20BAPPEDA%20SUMBAR%20yang%20telah%20Anda%20buat,%20dengan%20detail%20sebagai%20berikut:".$end."%20%20Tanggal%20janji:%20".date('d-m-Y', strtotime($data->tanggal_janji))."".$end."%20%20Waktu%20janji:%20".$data->jam_janji."%20WIB".$end."%20%20Pegawai%20yang%20ditemui:%20".$data->pegawai_ditemui."".$end."%20%20Urusan:%20".$data->urusan."".$end."%20*Telah*%20*disetujui*".$end."".$end."Silahkan%20datang%20sesuai%20waktu%20janji%20yang%20telah%20disepakati".$end."Terima Kasih.";
                                  ?>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-info" href="{{ url('https://wa.me/'.$telpon.'?text='.$text)}}" target="_blank"><i class="fa fa-share"></i></a>
+                                    <a type="button" class="btn btn-xs m-r-5 btn-success" href="{{ url('https://wa.me/'.$telpon.'?text='.$text)}}" target="_blank"><i class="fa fa-whatsapp"></i></a>
                                  </td>
                                  <td>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->id) }}"><i class="fa fa-eye"> Detail</i></a>
+                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->kode_tamu) }}"><i class="fa fa-eye"></i></a>
                                  </td>
                               </tr>    
                               @endforeach
@@ -148,12 +148,12 @@
                                  <?php 
                                     $telpon = substr_replace($data->telpon,'62',0,1);
                                     $end = urlencode("\n");
-                                    $text = "Kepada%20Yth.%20".$data->nama_tamu.",".$end."".$end."Janji%20tamu%20BAPPEDA%20SUMBAR%20yang%20telah%20Anda%20buat,%20dengan%20detail%20sebagai%20berikut:".$end."%20%20Tanggal%20janji:%20".date('d-m-Y', strtotime($data->tanggal_janji))."".$end."%20%20Waktu%20janji:%20".$data->jam_janji."%20WIB".$end."%20%20Pegawai%20yang%20ditemui:%20".$data->pegawai_ditemui."".$end."%20%20Urusan:%20".$data->urusan."".$end."%20*Mohon%20maaf,%20telah%20ditolak*".$end."".$end."Terima Kasih.";
+                                    $text = "Kepada%20Yth.%20".$data->nama_tamu.",".$end."".$end."Janji%20tamu%20BAPPEDA%20SUMBAR%20yang%20telah%20Anda%20buat,%20dengan%20detail%20sebagai%20berikut:".$end."%20%20Tanggal%20janji:%20".date('d-m-Y', strtotime($data->tanggal_janji))."".$end."%20%20Waktu%20janji:%20".$data->jam_janji."%20WIB".$end."%20%20Pegawai%20yang%20ditemui:%20".$data->pegawai_ditemui."".$end."%20%20Urusan:%20".$data->urusan."".$end."%20*Mohon%20maaf,%20telah%20ditolak%20karena%20terdapat%20agenda%20lain*".$end."".$end."Terima Kasih.";
                                  ?>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-info" href="{{ url('https://wa.me/'.$telpon.'?text='.$text)}}" target="_blank"><i class="fa fa-share"></i></a>
+                                    <a type="button" class="btn btn-xs m-r-5 btn-success" href="{{ url('https://wa.me/'.$telpon.'?text='.$text)}}" target="_blank"><i class="fa fa-whatsapp"></i></a>
                                  </td>
                                  <td>
-                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->id) }}"><i class="fa fa-eye"> Detail</i></a>
+                                    <a type="button" class="btn btn-xs m-r-5 btn-primary" href="{{ url('/bukutamu/janji/'.$data->kode_tamu) }}"><i class="fa fa-eye"></i></a>
                                  </td>
                               </tr>    
                               @endforeach

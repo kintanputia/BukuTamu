@@ -7,7 +7,7 @@
     <title>SAKATO PLAN - DASHBOARD</title>
     <link rel="icon" type="image/png" sizes="16x16" href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/favicon.png">
 
-    <link href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{asset('assets/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" />
     <link href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/bootstrap.min.css" rel="stylesheet">
     <link href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/jquery.dataTables.min.css" rel="stylesheet">
     <link href="http://sakatoplan.sumbarprov.go.id/assets/new_sso/baru/login_files/animate.css" rel="stylesheet">

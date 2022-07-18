@@ -131,7 +131,7 @@
                            </td>
                         <td>{{ $data->urusan }}</td>
                         <td>
-                           <a class="btn btn-warning btn-xs" href="{{ url('/bukutamu/master/'.$data->id) }}"><i class="fa fa-edit"></i></a>
+                           <a class="btn btn-warning btn-xs" href="{{ url('/bukutamu/master/'.$data->kode_tamu) }}"><i class="fa fa-edit"></i></a>
                         </td>
                      </tr>                                                      
                     @endforeach
@@ -153,6 +153,17 @@
         title: '{{ Session('success') }}',
         showConfirmButton: true,
         timer: 2000
+        })
+    </script>
+@endif
+@if (Session::has('error'))
+    <script>
+        Swal.fire({
+        icon: 'error',
+        title: '{{ Session('error') }}',
+        showConfirmButton: true,
+        showCloseButton: true,
+        timer: 3000
         })
     </script>
 @endif

@@ -30,8 +30,14 @@
             <h4 class="panel-title">Edit Buku Tamu</h4>
          </div>
          <div class="panel-body panel-form"> 
-            <form class="form-horizontal form-bordered" method="POST" action="{{ url('/bukutamu/master/'.$data->id) }}">
+            <form class="form-horizontal form-bordered" method="POST" action="{{ url('/bukutamu/master/'.$data->kode_tamu) }}">
                @csrf
+               <div class="form-group">
+                  <label class="control-label col-md-4 col-sm-4" for="kode_tamu">#ID</label>
+                  <div class="col-md-6 col-sm-6">
+                      <input class="form-control" type="text" value="{{ $data->kode_tamu }}" readonly>
+                  </div>
+              </div>
                <div class="form-group">
                   <label class="control-label col-md-4 col-sm-4" for="nama_tamu">Nama Tamu</label>
                   <div class="col-md-6 col-sm-6">

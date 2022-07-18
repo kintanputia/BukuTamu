@@ -157,10 +157,10 @@
 
      {{-- list Buku Tamu --}}
      @if(!empty($data))
-     <section id="list_bukutamu" style="margin-top: 180px; margin-bottom: 50px">
-        <div class="row align-items-center reveal">
+     <section id="list_bukutamu" style="margin-top: 150px; margin-bottom: 50px">
+        <div class="row align-items-center">
             <div class="col-10 col-md-10 col-sm-10 col-xs-10 mx-auto" style="overflow:hidden">
-                <div class="card px-5 py-4 shadow rounded" style="background: white">
+                <div class="card px-5 py-4 shadow rounded card-form" style="background: white">
                     <div class="card-header mb-4" style="background: white">
                         <h4 class="font-weight-bold text-left fs-14">Log Tamu : {{ date('d-m-Y') }}</h4>
                     </div>
@@ -178,17 +178,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @foreach ($data as $data)
+                           @foreach ($data as $d)
                            <tr>
                               <td>{{ $loop->iteration }}</td>
-                              <td>{{ $data->nama_tamu }}</td>
-                              <td>{{ $data->instansi }}</td>
-                              <td>{{ $data->waktu_masuk }} WIB</td>
-                              <td>{{ $data->nama_pegawai }}</td>
-                              <td>{{ $data->urusan }}</td>
+                              <td>{{ $d->nama_tamu }}</td>
+                              <td>{{ $d->instansi }}</td>
+                              <td>{{ $d->waktu_masuk }} WIB</td>
+                              <td>{{ $d->nama_pegawai }}</td>
+                              <td>{{ $d->urusan }}</td>
                               <td>
-                                    <button class="btn btn-sm btn-danger" role="button" data-toggle="modal" data-target="#penilaianModal" 
-                                    onclick="showModalPenilaian({{$data->id}})">Selesai</button>
+                                  <button class="btn btn-sm btn-danger" onclick="cekKodeTamu('{{ $d->kode_tamu }}')">Selesai</button>
+                                    <!-- <button class="btn btn-sm btn-danger" role="button" data-toggle="modal" data-target="#penilaianModal" 
+                                    onclick="showModalPenilaian({{ $d->kode_tamu }})">Selesai</button> -->
                               </td>
                            </tr> 
                            @endforeach
@@ -203,50 +204,6 @@
     {{-- end section list bukutamu --}}
 </div>
 <!-- end page container -->
-
-    {{-- modal penilaian pelayanan --}}
-    <div class="modal fade" id="penilaianModal" tabindex="-1" role="dialog" aria-labelledby="penilaianModalTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header header-color">
-                <img src="{{ asset('assets/img/sumbar-logo.png') }}" alt="logo" class="img-shadow mx-left mr-3" width="50">
-                <h5 class="modal-title font-weigth-bold text-white" id="penilaianModalLongTitle" style="font-size: 20px">Badan Perencanaan Pembangunan Daerah<br> Provinsi Sumatera Barat</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row" style="margin-bottom: 35px">
-                    <div class="col justify-content-center text-center">
-                        <span class="fw-bold" style="font-size: 20px">SILAHKAN BERI PENILAIAN ANDA TERHADAP PELAYANAN KAMI</span>
-                    </div>  
-                </div>
-                <div class="row" style="margin-bottom: 15px">
-                    <div class="col-4 justify-content-center text-center">
-                        <img src="{{ asset('assets/img/penilaian/tidak_puas.png') }}" width="100">
-                    </div>  
-                    <div class="col-4 justify-content-center text-center">
-                        <img src="{{ asset('assets/img/penilaian/cukup.png') }}" width="100">
-                    </div>  
-                    <div class="col-4 justify-content-center text-center">
-                        <img src="{{ asset('assets/img/penilaian/sangat_puas.png') }}" width="100">
-                    </div>    
-                </div>
-                    <div class="row mb-3">
-                        <div class="col-4 justify-content-center text-center">
-                            <a class="btn btn-danger nilai_pelayanan" value="0">Kurang Puas</a>
-                        </div>  
-                        <div class="col-4 justify-content-center text-center">
-                            <a class="btn btn-warning nilai_pelayanan" value="1">Cukup Puas</a>
-                        </div>
-                        <div class="col-4 justify-content-center text-center">
-                            <a class="btn btn-success nilai_pelayanan" value="2">Sangat Puas</a>
-                        </div> 
-                    </div>   
-            </div>
-        </div>
-        </div>
-    </div>
 
     {{-- Modal Form Buat Janji --}}
     <div class="modal fade" id="formBuatJanjiModal" tabindex="-1" role="dialog" aria-labelledby="formBuatJanjiModalTitle" aria-hidden="true">
@@ -373,13 +330,36 @@
 <script src="{{ asset('assets/js/form-validate.js') }}"></script>
 
 {{-- jika data berhasil disimpan --}}
+@if (Session::has('title'))
+    <script>
+        Swal.fire({
+        icon: 'success',
+        title: '{{ Session('title') }}',
+        text: '{{ Session('text') }}',
+        showConfirmButton: true,
+        showCloseButton: true,
+        })
+    </script>
+@endif
 @if (Session::has('success'))
     <script>
         Swal.fire({
         icon: 'success',
         title: '{{ Session('success') }}',
         showConfirmButton: true,
-        timer: 2000
+        showCloseButton: true,
+        timer: 3000
+        })
+    </script>
+@endif
+@if (Session::has('error'))
+    <script>
+        Swal.fire({
+        icon: 'error',
+        title: '{{ Session('error') }}',
+        showConfirmButton: true,
+        showCloseButton: true,
+        timer: 3000
         })
     </script>
 @endif
@@ -413,68 +393,68 @@
     });
 </script>
 
-{{-- script untuk onscroll --}}
 <script>
-function reveal() {
-  var reveals = document.querySelectorAll(".reveal");
+    function showTime(){
+        var date = new Date();
+        var h = date.getHours(); // 0 - 23
+        var m = date.getMinutes(); // 0 - 59
+        var s = date.getSeconds(); // 0 - 59
 
-  for (var i = 0; i < reveals.length; i++) {
-    var windowHeight = window.innerHeight;
-    var elementTop = reveals[i].getBoundingClientRect().top;
-    var elementVisible = 150;
+        var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-    if (elementTop < windowHeight - elementVisible) {
-      reveals[i].classList.add("active");
-    } else {
-      reveals[i].classList.remove("active");
+        var day = date.getDate();
+        var month = date.getMonth();
+        var thisDay = date.getDay(), thisDay = myDays[thisDay];
+        var yy = date.getYear();
+        var year = (yy < 1000) ? yy + 1900 : yy;
+        
+        h = (h < 10) ? "0" + h : h;
+        m = (m < 10) ? "0" + m : m;
+        s = (s < 10) ? "0" + s : s;
+        
+        var time = h + ":" + m + ":" + s ;
+        var today = thisDay + ', ' + day + ' ' + months[month] + ' ' + year;
+        document.getElementById("MyDateDisplay").innerText = today;
+        document.getElementById("MyDateDisplay").textContent = today;
+        document.getElementById("MyClockDisplay").innerText = time;
+        document.getElementById("MyClockDisplay").textContent = time;
+        
+        setTimeout(showTime, 1000);
     }
-  }
-}
-window.addEventListener("scroll", reveal);
+    showTime();
 
-function showTime(){
-    var date = new Date();
-    var h = date.getHours(); // 0 - 23
-    var m = date.getMinutes(); // 0 - 59
-    var s = date.getSeconds(); // 0 - 59
-
-    var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-
-    var day = date.getDate();
-    var month = date.getMonth();
-    var thisDay = date.getDay(), thisDay = myDays[thisDay];
-    var yy = date.getYear();
-    var year = (yy < 1000) ? yy + 1900 : yy;
-    
-    h = (h < 10) ? "0" + h : h;
-    m = (m < 10) ? "0" + m : m;
-    s = (s < 10) ? "0" + s : s;
-    
-    var time = h + ":" + m + ":" + s ;
-    var today = thisDay + ', ' + day + ' ' + months[month] + ' ' + year;
-    document.getElementById("MyDateDisplay").innerText = today;
-    document.getElementById("MyDateDisplay").textContent = today;
-    document.getElementById("MyClockDisplay").innerText = time;
-    document.getElementById("MyClockDisplay").textContent = time;
-    
-    setTimeout(showTime, 1000);
-}
-showTime();
-</script>
-
-{{-- Script function --}}
-<script>
-    function showModalPenilaian(id){  
-            const tagAs = document.querySelectorAll(".nilai_pelayanan");
-
-            tagAs.forEach((tagA) => {
-                tagA.addEventListener("click", function() {
-                    const value = tagA.getAttribute("value");
-                    tagA.setAttribute("href", `/bukutamu/${id}/${value}`)
-            });
-        });
-    };
+    function cekKodeTamu(id){
+        Swal.fire({
+            title: 'Kode Unik Tamu',
+            input: 'text',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            inputLabel: 'Masukkan kode unik Anda untuk checkout',
+            inputPlaceholder: 'kode unik tamu',
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.value == id) { 
+                Swal.fire({
+                    title: "Checkout",
+                    text: "Kode unik tamu Anda benar, klik OK untuk melanjutkan checkout",
+                    type: "info",
+                    allowOutsideClick: false,
+                    confirmButtonText: 'OK', 
+                }).then((result) => {
+                    if(result.isConfirmed){
+                        window.location = "/bukutamu/nilai/"+id
+                    }
+                    else if(result.isDenied){
+                        Swal.fire('Checkout gagal', 'Anda membatalkan checkout', 'error')  
+                    }
+                });   
+            } else {    
+                Swal.fire('Checkout gagal', 'Kode unik tamu Anda salah', 'error')  
+            }
+        })
+    }
 
     function updateForm(){
         var hidden_elements = document.getElementsByClassName("hidden_input");
@@ -525,7 +505,7 @@ showTime();
                             // jml = jml+1;
                         });
                         // $('#jumlah_tamu').val(jml);
-                        $('#id_tamu').val(data.id);
+                        $('#id_tamu').val(data.kode_tamu);
                         $('#instansi').val(data.instansi);
                         $('#urusan').val(data.urusan);
                     }

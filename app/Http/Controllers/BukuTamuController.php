@@ -10,25 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class BukuTamuController extends Controller
 {
-    protected function absen($nip){
-        $data_masuk_keluar = array();
-
-        $thn_bulan = date('Y-m');
-        $json = file_get_contents('https://abon.sumbarprov.go.id/penilaian/presensi/'.$nip.'/'.$thn_bulan);
-        $absen = json_decode($json, true);
-
-        $tgl_skrg = date('Y-m-d')." 07:30:00";
-        foreach($absen['result']['rincian'] as $i){
-            if($i['jadwal_masuk'] == $tgl_skrg){
-                array_push($data_masuk_keluar, array(
-                    "masuk"=>$i['masuk'], 
-                    "keluar"=>$i['keluar'])
-                );
-            }
-        }
-        return $data_masuk_keluar[0];
-    }
-
     // mengambil data dari URI
     protected function URI(){
         //read data
@@ -46,20 +27,8 @@ class BukuTamuController extends Controller
 
         $pegawai = $this->URI();
         $data_pegawai = array();
-        // $this->absen(198201212000121001);
-        // foreach($pegawai as $p){
-        //     $data_pegawai[] = array();
-        //     $absen = $this->absen($p['NIP']);
-        //     if($absen){
-        //         $data_pegawai = array(
-        //             'nip'   => $p['NIP'],
-        //             'nama'  => $p['NAMA_PEGAWAI'],
-        //             'absen' => $absen
-        //         );
-        //     }
-        // }
 
-        $tamu = BukuTamu::where('tanggal_masuk', date('Y-m-d'))->where('nilai_pelayanan', null)->get();
+        $tamu = BukuTamu::where('tanggal_masuk', date('Y-m-d'))->where('nilai_pelayanan', null)->orderBy('waktu_masuk', 'asc')->get();
         foreach($tamu as $row){
             $data_nip = explode(',', trim($row->nip));
             foreach($data_nip as $nip){
@@ -73,7 +42,6 @@ class BukuTamuController extends Controller
             array_push($data, $row);
             array_splice($data_nama, 0, count($data_nama));
         }
-
         return view('index', ['pegawai'=>$pegawai, 'data'=>$data]);
     }
 
@@ -90,8 +58,13 @@ class BukuTamuController extends Controller
         //convert array to string
         $data_pegawai_ditemui = implode(",", $pegawai_ditemui);
 
+        //id
+        $log_in = date("Y/m/d H:i:s");
+        $hash_id = strtoupper(substr(sha1($log_in),0,6));
+
         //simpan
-        BukuTamu::create([
+        $query = BukuTamu::create([
+            'kode_tamu' => $hash_id,
             'nama_tamu' => ucwords(strtolower($request['nama_tamu'])),
             'instansi' => $request['instansi'],
             'nip' => $data_pegawai_ditemui,
@@ -100,14 +73,29 @@ class BukuTamuController extends Controller
             'tanggal_masuk' => date('Y-m-d'),
             'waktu_masuk' => date('H:i:s')
         ]);
+        $result = $query->save();
 
-        return redirect()->back()->with('success', 'Selamat Datang di BAPPEDA, Silahkan Masuk!');
+        if($result == true){
+            $title = "Selamat Datang di BAPPEDA SUMATERA BARAT";
+            $text = "Silahkan simpan kode unik Anda: ".$hash_id."";
+            return redirect()->back()->with('title', $title)->with('text', $text);
+        }
+        else{
+            return redirect()->back()->with('error', "Data Tamu Gagal Disimpan");
+        }
     }
 
     // menyimpan data penilaian tamu
-    public function storePenilaianTamu($id, $nilai){
-        BukuTamu::where('id', $id)->update(['nilai_pelayanan' => $nilai, 'waktu_keluar' => date('H:i:s')]);
-        return redirect()->back()->with('success', 'Terimakasih telah memberikan penilaian');
+    public function storePenilaianTamu(Request $request, $id){
+        $nilai = $request['nilai'];
+        $kritik_saran = $request['kritik_saran'];
+        $query = BukuTamu::where('kode_tamu', $id)->update(['nilai_pelayanan' => $nilai, 'waktu_keluar' => date('H:i:s'), 'kritik_saran' => $kritik_saran]);
+        if($query == 1){
+            return redirect()->route('index.bukutamu')->with('success', 'Terima kasih, sampai jumpa lagi!');
+        }
+        else{
+            return redirect()->route('index.bukutamu')->with('error', 'Checkout Gagal');
+        }
     }
 
     // menampilkan data buku tamu
@@ -169,12 +157,13 @@ class BukuTamuController extends Controller
         $result = $bukuTamu->update();
 
         if($result == true){
-            return redirect()->back()->with('success', 'Selamat Datang di BAPPEDA, Silahkan Masuk!');
+            $title = "Selamat Datang di BAPPEDA SUMATERA BARAT";
+            $text = "Silahkan simpan kode unik Anda: ".$id."";
+            return redirect()->back()->with('title', $title)->with('text', $text);
         }
         else{
-            return redirect()->back()->with('success', 'Data Gagal Diinputkan');
-        }
-        
+            return redirect()->back()->with('error', 'Data Tamu Gagal Disimpan');
+        } 
     }
 
     // fetch data buku tamu
@@ -199,7 +188,7 @@ class BukuTamuController extends Controller
         $data_nama = array();
         $data = array();
 
-        $tamu = BukuTamu::select('id', 'nama_tamu', 'tanggal_masuk', 'nip', 'yang_menerima', 'urusan')->where('id', $id)->first();
+        $tamu = BukuTamu::select('kode_tamu', 'nama_tamu', 'tanggal_masuk', 'nip', 'yang_menerima', 'urusan')->where('kode_tamu', $id)->first();
         $data_yang_ditemui = explode(',', trim($tamu->yang_menerima));  
         $data_nip = explode(',', trim($tamu->nip));
             foreach($data_nip as $nip){
@@ -213,7 +202,6 @@ class BukuTamuController extends Controller
             $tamu->pegawai_menerima = $data_yang_ditemui;
             array_push($data, $tamu);
             array_splice($data_nama, 0, count($data_nama));   
-        
         return view('buku_tamu.update_buku_tamu', ['pegawai'=>$pegawai, 'data'=>$data[0] ]);
     }
 
@@ -238,9 +226,16 @@ class BukuTamuController extends Controller
 
          $bukuTamu = BukuTamu::find($id);
          $bukuTamu->yang_menerima = $data_pegawai_menerima;
-         $bukuTamu->update();
+         $result = $bukuTamu->update();
 
-        return redirect()->route('show.bukutamu')->with('success', 'Edit data berhasil dilakukan');
+         if($result == true){
+            return redirect()->route('show.bukutamu')->with('success', 'Edit data berhasil dilakukan');
+         }
+         else{
+            return redirect()->route('show.bukutamu')->with('error', 'Edit data gagal dilakukan');
+         }
+
+       
     }
 
     // menmapilkan data janji tamu
@@ -318,8 +313,13 @@ class BukuTamuController extends Controller
         //convert array to string
         $data_pegawai_ditemui = implode(",", $pegawai_ditemui);
 
+        //id
+        $log_in = date("Y/m/d H:i:s");
+        $hash_id = strtoupper(substr(sha1($log_in),0,6));
+
         //simpan
-        BukuTamu::create([
+        $query = BukuTamu::create([
+            'kode_tamu' => $hash_id,
             'nama_tamu' => ucwords(strtolower($request['nama_tamu'])),
             'instansi' => $request['instansi'],
             'telpon' => $request['telpon'],
@@ -329,17 +329,24 @@ class BukuTamuController extends Controller
             'jam_janji' => $request['jam_janji'],
             'status_janji' => 0
         ]);
+        $result = $query->save();
 
-        return redirect()->back()->with('success', 'Janji tamu berhasil disimpan!');
+        if($result == true){
+            return redirect()->back()->with('success', 'Janji tamu berhasil disimpan!');
+        }
+        else{
+            return redirect()->back()->with('error', 'Janji tamu gagal disimpan!');
+        }
+        
     }
 
     // update status janji tamu
     public function updateJanjiTamu($id, $action){
         if($action == "setujui"){
-            $get = BukuTamu::where('id', $id)->update(['status_janji' => 1]);
+            $get = BukuTamu::where('kode_tamu', $id)->update(['status_janji' => 1]);
         }
         elseif($action == "tolak"){
-            $get = BukuTamu::where('id', $id)->update(['status_janji' => 2]);
+            $get = BukuTamu::where('kode_tamu', $id)->update(['status_janji' => 2]);
         }
 
         return redirect()->back();

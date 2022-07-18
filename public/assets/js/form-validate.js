@@ -14,7 +14,6 @@ var validobj = $("#form_janjitamu").validate({
       },
       instansi:{
          required: true,
-         lettersonly: true,
       },
       telpon:{
          required: true,
@@ -45,7 +44,6 @@ var validobj = $("#form_janjitamu").validate({
       },
       instansi:{
          required: "*Instansi asal tidak boleh kosong",
-         lettersonly: "*Hanya menerima inputan huruf",
       },
       telpon:{
          required: "*Telepon tidak boleh kosong",
@@ -82,7 +80,6 @@ var validobj = $("#form_janjitamu").validate({
       },
       instansi:{
          required: true,
-         lettersonly: true,
       },
       pegawai:{
          required: true,
@@ -103,7 +100,6 @@ var validobj = $("#form_janjitamu").validate({
       },
       instansi:{
          required: "*Instansi asal tidak boleh kosong",
-         lettersonly: "*Hanya menerima inputan huruf",
       },
       pegawai:{
          required: "*Pegawai yang ditemui tidak boleh kosong",
@@ -118,7 +114,30 @@ var validobj = $("#form_janjitamu").validate({
    }
   });
 
+  var validobj3 = $("#form_pelayanan").validate({
+   rules:{
+      nilai:{
+         required: true
+      },
+      kritik_saran:{
+         required: true,
+      },
+   },
+   messages:{
+      nilai:{
+         required: "*Nilai pelayanan tidak boleh kosong",
+      },
+      kritik_saran:{
+         required: "*Kritik/saran/komentar tidak boleh kosong",
+      },
+   },
+   submitHandler: function(form) {
+     $(form).submit();
+   }
+  });
+
   $(document).on("change", ".select2-offscreen", function() {
    validobj.form();
    validobj2.form();
+   validobj3.form();
    });

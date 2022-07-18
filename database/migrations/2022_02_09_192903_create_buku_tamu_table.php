@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('buku_tamu', function (Blueprint $table) {
-            $table->id();
+            $table->string('kode_tamu', 6);
             $table->string('nama_tamu', 40);
             $table->string('instansi', 40);
             $table->date('tanggal_janji')->nullable($value = true);
@@ -29,6 +29,9 @@ return new class extends Migration
             $table->time('waktu_masuk')->nullable($value = true);
             $table->time('waktu_keluar')->nullable($value = true);
             $table->integer('nilai_pelayanan')->nullable($value = true);
+            $table->text('kritik_saran')->nullable($value = true);
+
+            $table->primary('kode_tamu');
         });
     }
 
